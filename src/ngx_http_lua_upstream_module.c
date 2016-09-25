@@ -935,11 +935,12 @@ ngx_http_lua_upstream_remove_peer(lua_State * L)
              if(!flag) {
                  peers = ngx_prealloc(ngx_cycle->pool, peers, old_size, new_size);
                  peers->number -= 1;
-
+                 peers->single = (peers->number == 1);
              } else {
                  backup = ngx_prealloc(ngx_cycle->pool, backup, old_size, new_size);
                  backup->number -= 1;
                  peers->next = backup;
+                 peers->single = (peers->number == 1);
              }
 
              uscf->peer.data = peers;
